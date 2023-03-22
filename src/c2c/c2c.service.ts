@@ -1,13 +1,6 @@
 const crypto = require('crypto');
-const https = require('https');
-import fs from 'fs';
-import { promisify } from 'util';
-
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { fsync, writeFileSync } from 'fs';
-import { hostname } from 'os';
-import { map } from 'rxjs';
 import { GetTokenDTO } from './dto/getToken.dto';
 
 @Injectable()
