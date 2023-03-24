@@ -21,5 +21,9 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], GetTokenDTO.prototype, "apiSecret", void 0);
+__decorate([
+    (0, class_validator_1.IsInt)(),
+    __metadata("design:type", Number)
+], GetTokenDTO.prototype, "timeStampDiff", void 0);
 exports.GetTokenDTO = GetTokenDTO;
 //# sourceMappingURL=getToken.dto.js.map

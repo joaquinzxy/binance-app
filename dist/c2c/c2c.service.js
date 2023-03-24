@@ -15,10 +15,10 @@ const common_1 = require("@nestjs/common");
 let C2cService = class C2cService {
     constructor() { }
     async getInfo(getTokenDto) {
-        const { apiKey, apiSecret } = getTokenDto;
+        const { apiKey, apiSecret, timeStampDiff } = getTokenDto;
         const endpoint = '/sapi/v1/c2c/orderMatch/listUserOrderHistory';
         const params = {
-            timestamp: Date.now() + 500,
+            timestamp: Date.now() + timeStampDiff,
         };
         const queryString = Object.keys(params)
             .map((key) => `${key}=${params[key]}`)

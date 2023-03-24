@@ -8,14 +8,14 @@ export class C2cService {
 
   async getInfo(getTokenDto: GetTokenDTO) {
     // Replace with your own API key and secret
-    const { apiKey, apiSecret } = getTokenDto;
+    const { apiKey, apiSecret, timeStampDiff } = getTokenDto;
 
     // Define the endpoint URL
     const endpoint = '/sapi/v1/c2c/orderMatch/listUserOrderHistory';
 
     // Define the request parameters
     const params = {
-      timestamp: Date.now() + 500,
+      timestamp: Date.now() + timeStampDiff,
     };
 
     // Generate the query string

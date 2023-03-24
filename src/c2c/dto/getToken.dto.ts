@@ -1,4 +1,4 @@
-import { IsString } from 'class-validator';
+import { IsInt, IsString } from 'class-validator';
 
 export class GetTokenDTO {
   @IsString()
@@ -6,4 +6,7 @@ export class GetTokenDTO {
 
   @IsString()
   apiSecret: string;
+
+  @IsInt()
+  timeStampDiff: number;
 }
