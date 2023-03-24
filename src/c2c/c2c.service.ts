@@ -8,14 +8,18 @@ export class C2cService {
 
   async getInfo(getTokenDto: GetTokenDTO) {
     // Replace with your own API key and secret
-    const { apiKey, apiSecret, timeStampDiff } = getTokenDto;
+    const { apiKey, apiSecret, timeStampDiff = 0 } = getTokenDto;
 
     // Define the endpoint URL
     const endpoint = '/sapi/v1/c2c/orderMatch/listUserOrderHistory';
 
+    const { serverTime } = await (
+      await fetch('https://api.binance.com/api/v3/time')
+    ).json();
+
     // Define the request parameters
     const params = {
-      timestamp: Date.now() + timeStampDiff,
+      timestamp: serverTime + timeStampDiff,
     };
 
     // Generate the query string

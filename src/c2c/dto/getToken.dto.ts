@@ -1,4 +1,5 @@
-import { IsInt, IsString } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsInt, IsOptional, IsString } from 'class-validator';
 
 export class GetTokenDTO {
   @IsString()
@@ -7,6 +8,8 @@ export class GetTokenDTO {
   @IsString()
   apiSecret: string;
 
+  @Transform(({ value }) => parseInt(value))
   @IsInt()
-  timeStampDiff: number;
+  @IsOptional()
+  timeStampDiff: number = 0;
 }

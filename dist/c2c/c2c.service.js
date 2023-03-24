@@ -15,10 +15,11 @@ const common_1 = require("@nestjs/common");
 let C2cService = class C2cService {
     constructor() { }
     async getInfo(getTokenDto) {
-        const { apiKey, apiSecret, timeStampDiff } = getTokenDto;
+        const { apiKey, apiSecret, timeStampDiff = 0 } = getTokenDto;
         const endpoint = '/sapi/v1/c2c/orderMatch/listUserOrderHistory';
+        const { serverTime } = await (await fetch('https://api.binance.com/api/v3/time')).json();
         const params = {
-            timestamp: Date.now() + timeStampDiff,
+            timestamp: serverTime + timeStampDiff,
         };
         const queryString = Object.keys(params)
             .map((key) => `${key}=${params[key]}`)
