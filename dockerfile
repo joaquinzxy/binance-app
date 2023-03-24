@@ -1,22 +1,15 @@
-# Defina la imagen base
-FROM alpine:3.14
+from node:18.10
 
+WORKDIR /usr/src/app
 
-# Instala Node.js y npm
-RUN apk add --update nodejs npm
+COPY package.json .
 
-# Crea el directorio de la aplicación
-WORKDIR /app
+COPY yarn.lock .
 
-# Copia los archivos necesarios
-COPY package.json ./package.json
-COPY ./dist ./dist
+RUN yarn install
 
-# Instala las dependencias
-RUN npm install --production
+COPY /dist . 
 
-# Expone el puerto de la aplicación
 EXPOSE 3000
 
-# Inicia la aplicación
-CMD [ "node", "dist/main.js" ]
+CMD ["node", "main.js"]
