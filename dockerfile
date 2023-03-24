@@ -1,15 +1,16 @@
-from node:18.10
+# Build stage
+FROM node:18-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN yarn install --production
+COPY . .
+RUN yarn build
 
-WORKDIR /usr/src/app
-
-COPY package.json .
-
-COPY yarn.lock .
-
-RUN yarn install
-
-COPY /dist . 
-
+# Production stage
+FROM node:18-alpine
+WORKDIR /app
+COPY --from=build /app/dist ./dist
+COPY package*.json ./
+RUN yarn install --production=true
 EXPOSE 3000
-
-CMD ["node", "main.js"]
+CMD ["node", "dist/main"]

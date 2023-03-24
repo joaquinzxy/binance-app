@@ -1,11 +1,10 @@
-const crypto = require('crypto');
-import { HttpService } from '@nestjs/axios';
+import { createHmac } from 'crypto';
 import { Injectable } from '@nestjs/common';
 import { GetTokenDTO } from './dto/getToken.dto';
 
 @Injectable()
 export class C2cService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor() {}
 
   async getInfo(getTokenDto: GetTokenDTO) {
     // Replace with your own API key and secret
@@ -27,8 +26,7 @@ export class C2cService {
     // queryString = timestamp=1334123123&operation=Sell&
 
     // Generate the signature
-    const signature = crypto
-      .createHmac('sha256', apiSecret)
+    const signature = createHmac('sha256', apiSecret)
       .update(queryString)
       .digest('hex');
 
@@ -38,21 +36,10 @@ export class C2cService {
       'X-MBX-APIKEY': apiKey,
     };
 
-    // Define the request options
-    const options = {
-      hostname: 'api.binance.com',
-      path: `${endpoint}?${queryString}&signature=${signature}`,
-      method: 'GET',
-      headers,
-    };
-
     const response = await fetch(
       `https://api.binance.com${endpoint}?${queryString}&signature=${signature}`,
       {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
         headers: {
           'Content-Type': 'application/json',
           'X-MBX-APIKEY': apiKey,

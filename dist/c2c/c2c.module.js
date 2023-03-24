@@ -10,12 +10,11 @@ exports.C2cModule = void 0;
 const common_1 = require("@nestjs/common");
 const c2c_service_1 = require("./c2c.service");
 const c2c_controller_1 = require("./c2c.controller");
-const axios_1 = require("@nestjs/axios");
 let C2cModule = class C2cModule {
 };
 C2cModule = __decorate([
     (0, common_1.Module)({
-        imports: [axios_1.HttpModule],
+        imports: [],
         controllers: [c2c_controller_1.C2cController],
         providers: [c2c_service_1.C2cService],
     })

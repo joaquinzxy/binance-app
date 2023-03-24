@@ -10,13 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.C2cService = void 0;
-const crypto = require('crypto');
-const axios_1 = require("@nestjs/axios");
+const crypto_1 = require("crypto");
 const common_1 = require("@nestjs/common");
 let C2cService = class C2cService {
-    constructor(httpService) {
-        this.httpService = httpService;
-    }
+    constructor() { }
     async getInfo(getTokenDto) {
         const { apiKey, apiSecret } = getTokenDto;
         const endpoint = '/sapi/v1/c2c/orderMatch/listUserOrderHistory';
@@ -26,25 +23,15 @@ let C2cService = class C2cService {
         const queryString = Object.keys(params)
             .map((key) => `${key}=${params[key]}`)
             .join('&');
-        const signature = crypto
-            .createHmac('sha256', apiSecret)
+        const signature = (0, crypto_1.createHmac)('sha256', apiSecret)
             .update(queryString)
             .digest('hex');
         const headers = {
             'Content-Type': 'application/json',
             'X-MBX-APIKEY': apiKey,
         };
-        const options = {
-            hostname: 'api.binance.com',
-            path: `${endpoint}?${queryString}&signature=${signature}`,
-            method: 'GET',
-            headers,
-        };
         const response = await fetch(`https://api.binance.com${endpoint}?${queryString}&signature=${signature}`, {
             method: 'GET',
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'same-origin',
             headers: {
                 'Content-Type': 'application/json',
                 'X-MBX-APIKEY': apiKey,
@@ -58,7 +45,7 @@ let C2cService = class C2cService {
 };
 C2cService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [axios_1.HttpService])
+    __metadata("design:paramtypes", [])
 ], C2cService);
 exports.C2cService = C2cService;
 //# sourceMappingURL=c2c.service.js.map
